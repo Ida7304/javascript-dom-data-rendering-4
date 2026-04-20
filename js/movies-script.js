@@ -93,29 +93,73 @@ const movies = [
 }
 ];
 
+// Variabler
 const moviesContainer = document.querySelector("#movies-container");
+const selectedCategory = document.querySelector("#category-select");
+const searchInput = document.querySelector("#gsearch");
+const form = document.querySelector("form");
 
-function displayMovies(movieList) {
-    moviesContainer.innerHTML += "";
-
-    movies.forEach((movie) => {
-        moviesContainer.innerHTML += `
-        <article>
+function displayMovies(movieList){
+    const html = movieList.map((movie) => {
+        return `
+         <article>
             <h2>${movie.title}</h2>
-                <ul>
-                    <li>${movie.genre}</li>
-                    <li>${movie.year}</li>
-                    <li>${movie.duration}</li>
-                </ul>
-            <figure>
-                <a href="${movie.url}"><img src="${movie.img}" alt="${movie.title}"></a>
-                <figcaption>${movie.title}</figcaption>
-            </figure>
-        </article>
-        `
-    });
+               <ul>
+                  <li>${movie.genre}</li>
+                  <li>${movie.year}</li>
+                  <li>${movie.duration}</li>
+               </ul>
+              <figure>
+                  <a href="${movie.url}"><img src="${movie.img}" alt="${movie.title}"></a>
+                  <figcaption>${movie.title}</figcaption>
+              </figure>
+             </article>
+        `;
+    }).join("");
+
+    moviesContainer.innerHTML = html;
 }
 
 displayMovies(movies);
+
+
+function filterMovies() {
+    const selectedValue = selectedCategory.value;
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    let filteredMovies = movies;
+
+    if(selectedValue != "Alle") {
+        filteredMovies = filteredMovies.filter((movies) => {
+            return movies.genre === selectedValue;
+        });
+    }
+
+    if(searchTerm != "") {
+        filteredMovies = filteredMovies.filter((movies) => {
+            return movies.title.toLocaleLowerCase().includes(searchTerm);
+        });
+    }
+
+    displayMovies(filteredMovies);
+}
+
+selectedCategory.addEventListener("change", filterMovies);
+
+searchInput.addEventListener("input", filterMovies);
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault;
+    filterMovies();
+});
+
+
+
+
+
+
+
+
+
+
 
 

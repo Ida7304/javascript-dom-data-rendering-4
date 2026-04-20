@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    gap: 30px;
 }
 
 body {
@@ -11,7 +12,7 @@ body {
 }
 
 article {
-    border: 1px solid pink;
+    border: 1px solid black;
     width: 220px;
     padding: 20px;
     border-radius: 5px;
@@ -27,4 +28,9 @@ article {
 #movies-container img {
     width: 150px;
     height: auto;
+}
+
+#movies-container h2, figcaption {
+    display: flex;
+    justify-content: center;
 }
